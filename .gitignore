@@ -1,0 +1,15 @@
+# Pastas de ambiente e caches
+.venv/
+__pycache__/
+*.pyc
+
+# Arquivos sensíveis
+.env
+.env.local
+
+# Banco de dados (caso esteja usando SQLite local)
+db.sqlite3
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
