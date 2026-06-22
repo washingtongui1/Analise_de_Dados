@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Listagem de Dados</title>
+</head>
+
+<body>
+  <h1>Clientes</h1>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Telefone</th>
+        <th>Endereço</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cliente in clientes %}
+      <tr>
+        <td>{{ cliente.id_cliente }}</td>
+        <td>{{ cliente.nome }}</td>
+        <td>{{ cliente.cpf }}</td>
+        <td>{{ cliente.telefone }}</td>
+        <td>{{ cliente.endereco }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">Nenhum cliente encontrado.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h1>Produtos</h1>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Preço</th>
+        <th>Estoque</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for produto in produtos %}
+      <tr>
+        <td>{{ produto.id_produto }}</td>
+        <td>{{ produto.nome_produto }}</td>
+        <td>{{ produto.preco }}</td>
+        <td>{{ produto.quantidade_estoque }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4">Nenhum produto encontrado.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h1>Vendas</h1>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Data</th>
+        <th>Valor Total</th>
+        <th>ID Cliente</th>
+        <th>ID Funcionário</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for venda in vendas %}
+      <tr>
+        <td>{{ venda.id_venda }}</td>
+        <td>{{ venda.data_venda }}</td>
+        <td>{{ venda.valor_total }}</td>
+        <td>{{ venda.id_cliente_id }}</td>
+        <td>{{ venda.id_funcionario_id }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">Nenhuma venda encontrada.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+
+</html>

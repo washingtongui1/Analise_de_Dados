@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}Análise de Vendas{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+  <h3 class="mb-1">Análise de Vendas</h3>
+  <p class="text-muted mb-0">Visão geral por funcionário</p>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-6">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <h5 class="card-title">Vendas por Funcionário</h5>
+        <canvas id="chartVendas"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <h5 class="card-title">Faturamento por Funcionário</h5>
+        <canvas id="chartFaturamento"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-sm border-0">
+  <div class="card-body">
+    <h5 class="card-title">Dados Brutos</h5>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover align-middle">
+        <thead>
+          <tr>
+            <th>ID Venda</th>
+            <th>Data</th>
+            <th>Valor</th>
+            <th>Cliente</th>
+            <th>Funcionário</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in relatorio %}
+          <tr>
+            <td>{{ item.id_venda }}</td>
+            <td>{{ item.data_venda }}</td>
+            <td>R$ {{ item.valor_total }}</td>
+            <td>{{ item.nome_cliente }}</td>
+            <td>{{ item.nome_funcionario }}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="text-center">Nenhum dado encontrado.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const labels = {{ labels| safe }};
+  const qtd = {{ qtd| safe }};
+  const faturamento = {{ faturamento| safe }};
+
+  if (labels.length && qtd.length) {
+    new Chart(document.getElementById('chartVendas'), {
+      type: 'pie',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: qtd,
+          backgroundColor: ['#0d6efd', '#198754', '#dc3545', '#fd7e14', '#6f42c1']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' }
+        }
+      }
+    });
+  }
+
+  if (labels.length && faturamento.length) {
+    new Chart(document.getElementById('chartFaturamento'), {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Faturamento',
+          data: faturamento,
+          backgroundColor: '#0d6efd'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: value => 'R$ ' + value
+            }
+          }
+        }
+      }
+    });
+  }
+</script>
+{% endblock %}
